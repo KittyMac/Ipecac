@@ -1,9 +1,9 @@
 
-func print(ipecac format: String, _ values: CustomStringConvertible...) {
+public func print(ipecac format: String, _ values: CustomStringConvertible...) {
     print(String(ipecac: format, values))
 }
 
-extension String {
+public extension String {
     
     private enum Alignment {
         case left
