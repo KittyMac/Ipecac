@@ -11,7 +11,7 @@ print(ipecac: """
        |{-?.2    }|{~8.3    }|{+?.1    }|
        |{-1      }|{~2      }|{1       }|
        +----------+----------+----------+
-       {{These are espaced braces}}
+       {{These are escaped braces}}
        """, "This is an unbounded field", "Hello", "World", 27, 1, 2, 3, 1.0/3.0, 543.0/23.0, 99999.99999)
 ```
 
@@ -25,7 +25,7 @@ This is an unbounded field
 |0.33      |  23.608  |      23.6|
 |Hello     |  World   |     Hello|
 +----------+----------+----------+
-{These are espaced braces}
+{These are escaped braces}
 ```
 
 ### Here's the skinny
@@ -44,7 +44,7 @@ Instead of ```%@``` or ```%s``` fields are denoted kind-of-like CSharp, with ```
 
 **Unnamed value indexes** are allowed by using a ```?```.  This value starts at 0, and is incremented after every ```?``` encountered inside of a ```{}```. So ```"{???     }"``` is valid, you will get the ```2``` indexed value in this field.
 
-***Type safety*** is preserved because ```String(ipecac:)``` and ```print(ipecac:)``` only accepts values which adhere to ```CustomStringConvertible```. 
+***Type safety*** is preserved because ```String(ipecac:)``` and ```print(ipecac:)``` only accept values which adhere to ```CustomStringConvertible```. 
 
 ***Braces can still be used*** by escaping it with another brace; ```{{```. For consistency, ```}``` is also escaped by ```}```, so ```{{}}``` prints ```{}```
 
