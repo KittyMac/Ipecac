@@ -1,17 +1,18 @@
-### The "better than nothing" formatted strings for Swift
+## "Better than nothing" formatted strings for Swift
 
 **Example:**
 
 ```swift
 print(ipecac: """
-         {0}
-         +----------+----------+----------+
-         |{-??     }|{~?      }|{?       }|
-         |{-?      }|{~?      }|{+?      }|
-         |{-1      }|{~2      }|{1       }|
-         +----------+----------+----------+
-         {{These are espaced braces}}
-         """, "This is an unbounded field", "Hello", "World", 27, 1, 2, 3)
+       {0}
+       +----------+----------+----------+
+       |{-??     }|{~?      }|{?       }|
+       |{-?      }|{~?      }|{+?      }|
+       |{-?.2    }|{~8.3    }|{+?.1    }|
+       |{-1      }|{~2      }|{1       }|
+       +----------+----------+----------+
+       {{These are espaced braces}}
+       """, "This is an unbounded field", "Hello", "World", 27, 1, 2, 3, 1.0/3.0, 543.0/23.0, 99999.99999)
 ```
 
 **Output:**
@@ -21,6 +22,7 @@ This is an unbounded field
 +----------+----------+----------+
 |Hello     |  World   |        27|
 |1         |    2     |         3|
+|0.33      |  23.608  |      23.6|
 |Hello     |  World   |     Hello|
 +----------+----------+----------+
 {These are espaced braces}
@@ -46,8 +48,4 @@ Instead of ```%@``` or ```%s``` fields are denoted kind-of-like CSharp, with ```
 
 ***Braces can still be used*** by escaping it with another brace; ```{{```. For consistency, ```}``` is also escaped by ```}```, so ```{{}}``` prints ```{}```
 
-
-
-### What's on the TODO list
-
-Individual value formatting, such the precision for float values.
+***Floating point precision*** is defined by placing ```.``` after the value index, followed by the number of precision digits. For example, ```{-?.4  }``` means "left aligned using the next value index with four points of decimal precision with a field width of 8"

@@ -21,6 +21,8 @@ public extension String {
         
         var variableIndex: Int = 0
         
+        var beforePeriod = true
+        var formatterPrecision: Int = 0
         var formatterIndex: Int = 0
         var formatterIsUnbounded = true
         var formatterFieldWidth: Int = 0
@@ -41,15 +43,44 @@ public extension String {
                 if c == "}" {
                     inFormatter = false
                     if formatterIndex >= 0 && formatterIndex < values.count {
-                        let value = values[formatterIndex].description
+                        
+                        let value = values[formatterIndex]
+                        var valueString = value.description
+                        
+                        if beforePeriod == false && formatterPrecision >= 0 {
+                            // assumably, value is a floating point "####.####". Since we
+                            // only work with the string, confirm its a floating point
+                            // and lop off the rest of the precision
+                            var isFloatingPoint = true
+                            var decimalCount = -1
+                            var charCount = 0
+                            for c in valueString {
+                                switch c {
+                                case ".":
+                                    decimalCount = charCount
+                                case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
+                                    break
+                                default:
+                                    isFloatingPoint = false
+                                    break
+                                }
+                                charCount += 1
+                            }
+                            
+                            if isFloatingPoint && (decimalCount + formatterPrecision) < valueString.count {
+                                valueString = String(valueString.prefix(decimalCount + formatterPrecision + 1))
+                            }
+                        }
+                        
+                        
                         if formatterIsUnbounded {
-                            scratch.append(value)
+                            scratch.append(valueString)
                         } else {
-                            let extra = formatterFieldWidth - value.count
+                            let extra = formatterFieldWidth - valueString.count
                             if extra > 0 {
                                 switch formatterFieldAlignment {
                                 case .left:
-                                    scratch.append(value)
+                                    scratch.append(valueString)
                                     for _ in 0..<extra {
                                         scratch.append(" ")
                                     }
@@ -57,20 +88,20 @@ public extension String {
                                     for _ in 0..<extra {
                                         scratch.append(" ")
                                     }
-                                    scratch.append(value)
+                                    scratch.append(valueString)
                                 case .center:
                                     let leftPadding = extra / 2
                                     let rightPadding = extra - leftPadding
                                     for _ in 0..<leftPadding {
                                         scratch.append(" ")
                                     }
-                                    scratch.append(value)
+                                    scratch.append(valueString)
                                     for _ in 0..<rightPadding {
                                         scratch.append(" ")
                                     }
                                 }
                             } else {
-                                scratch.append(contentsOf: value.description.prefix(formatterFieldWidth))
+                                scratch.append(contentsOf: valueString.description.prefix(formatterFieldWidth))
                             }
                         }
                     } else if formatterIsUnbounded == false {
@@ -82,6 +113,8 @@ public extension String {
                 }
                 
                 switch c {
+                case ".":
+                    beforePeriod = false
                 case "?":
                     formatterIndex = variableIndex
                     variableIndex += 1
@@ -94,16 +127,66 @@ public extension String {
                 case "+":
                     formatterFieldAlignment = .right
                     formatterIsUnbounded = false
-                case "0": formatterIndex = (formatterIndex * 10) + 0
-                case "1": formatterIndex = (formatterIndex * 10) + 1
-                case "2": formatterIndex = (formatterIndex * 10) + 2
-                case "3": formatterIndex = (formatterIndex * 10) + 3
-                case "4": formatterIndex = (formatterIndex * 10) + 4
-                case "5": formatterIndex = (formatterIndex * 10) + 5
-                case "6": formatterIndex = (formatterIndex * 10) + 6
-                case "7": formatterIndex = (formatterIndex * 10) + 7
-                case "8": formatterIndex = (formatterIndex * 10) + 8
-                case "9": formatterIndex = (formatterIndex * 10) + 9
+                case "0":
+                    if beforePeriod {
+                        formatterIndex = (formatterIndex * 10) + 0
+                    } else {
+                        formatterPrecision = (formatterPrecision * 10) + 0
+                    }
+                case "1":
+                    if beforePeriod {
+                        formatterIndex = (formatterIndex * 10) + 1
+                    } else {
+                        formatterPrecision = (formatterPrecision * 10) + 1
+                    }
+                case "2":
+                    if beforePeriod {
+                        formatterIndex = (formatterIndex * 10) + 2
+                    } else {
+                        formatterPrecision = (formatterPrecision * 10) + 2
+                    }
+                case "3":
+                    if beforePeriod {
+                        formatterIndex = (formatterIndex * 10) + 3
+                    } else {
+                        formatterPrecision = (formatterPrecision * 10) + 3
+                    }
+                case "4":
+                    if beforePeriod {
+                        formatterIndex = (formatterIndex * 10) + 4
+                    } else {
+                        formatterPrecision = (formatterPrecision * 10) + 4
+                    }
+                case "5":
+                    if beforePeriod {
+                        formatterIndex = (formatterIndex * 10) + 5
+                    } else {
+                        formatterPrecision = (formatterPrecision * 10) + 5
+                    }
+                case "6":
+                    if beforePeriod {
+                        formatterIndex = (formatterIndex * 10) + 6
+                    } else {
+                        formatterPrecision = (formatterPrecision * 10) + 6
+                    }
+                case "7":
+                    if beforePeriod {
+                        formatterIndex = (formatterIndex * 10) + 7
+                    } else {
+                        formatterPrecision = (formatterPrecision * 10) + 7
+                    }
+                case "8":
+                    if beforePeriod {
+                        formatterIndex = (formatterIndex * 10) + 8
+                    } else {
+                        formatterPrecision = (formatterPrecision * 10) + 8
+                    }
+                case "9":
+                    if beforePeriod {
+                        formatterIndex = (formatterIndex * 10) + 9
+                    } else {
+                        formatterPrecision = (formatterPrecision * 10) + 9
+                    }
                 default:
                     formatterIsUnbounded = false
                     break
@@ -117,9 +200,11 @@ public extension String {
                 if c == "{" {
                     inFormatter = true
                     formatterIndex = 0
+                    formatterPrecision = 0
                     formatterFieldWidth = 1
                     formatterFieldAlignment = .right
                     formatterIsUnbounded = true
+                    beforePeriod = true
                     continue
                 }
                 if c == "}" {
