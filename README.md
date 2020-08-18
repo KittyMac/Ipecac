@@ -17,7 +17,7 @@ print(ipecac: """
 
 **Output:**
 
-```swift
+```
 This is an unbounded field
 +----------+----------+----------+
 |Hello     |  World   |        27|
