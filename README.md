@@ -1,6 +1,6 @@
 ## "Better than nothing" formatted strings for Swift
 
-If you want to use heavily formatted strings in Swift, the advice I've found has been to use ```String(format:)```.  The problems with this are numerous, not the least of which it relies on ObjC which is not available on Linux Swift. Ipecac attempts to fill this void by providing a replacement for ```String(format:)```, one which fixes some of the issues.
+Think of Ipecac as an alternative for ```String(format:)```
 
 **Example:**
 
