@@ -52,14 +52,39 @@ is defined by a ```+``` sign, such as ```{+0     }``` The sign can appear anywhe
 **Unnamed value indexes**  
 are allowed by using a ```?```.  This value starts at 0, and is incremented after every ```?``` encountered inside of a ```{}```. So ```"{???     }"``` is valid, you will get the ```2``` indexed value in this field.
 
-***Type safety***  
+**Type safety**  
 is preserved because ```String(ipecac:)``` and ```print(ipecac:)``` only accept values which adhere to ```CustomStringConvertible```. 
 
-***Braces can still be used***  
+**Braces can still be used**  
 by escaping it with another brace; ```{{```. For consistency, ```}``` is also escaped by ```}```, so ```{{}}``` prints ```{}```
 
-***Floating point precision***  
+**Floating point precision**  
 is defined by placing ```.``` after the value index, followed by the number of precision digits. For example, ```{-?.4  }``` means "left aligned using the next value index with four points of decimal precision with a field width of 8"
+
+## Installation
+
+Ipecac is a fully compatible with the Swift Package Manager.
+
+### Swift Package Manager
+
+If you use swiftpm, you can add Ipecac as a dependency directly to your Package.swift file.
+
+```
+dependencies: [
+    .package(url: "https://github.com/KittyMac/Ipecac.git", .upToNextMinor(from: "0.0.1")),
+],
+```
+
+### Xcode
+
+To integrate with Xcode, simply add it as a package dependency by going to
+
+```
+File -> Swift Packages -> Add Package Dependency
+```
+
+and pasting the url to this repository. Follow the instructions to complete the dependency addition.  [Check the releases page](https://github.com/KittyMac/ipecac/releases) for release versions or choose master branch for the bleeding edge.
+
 
 ## License
 
