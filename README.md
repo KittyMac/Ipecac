@@ -88,7 +88,7 @@ and pasting the url to this repository. Follow the instructions to complete the 
 
 ## License
 
-Flynn is free software distributed under the terms of the MIT license, reproduced below. Flynn may be used for any purpose, including commercial purposes, at absolutely no cost. No paperwork, no royalties, no GNU-like "copyleft" restrictions. Just download and enjoy.
+Ipecac is free software distributed under the terms of the MIT license, reproduced below. Ipecac may be used for any purpose, including commercial purposes, at absolutely no cost. No paperwork, no royalties, no GNU-like "copyleft" restrictions. Just download and enjoy.
 
 Copyright (c) 2020 [Chimera Software, LLC](http://www.chimerasw.com)
 
