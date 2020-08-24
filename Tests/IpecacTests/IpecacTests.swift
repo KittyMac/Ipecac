@@ -14,6 +14,7 @@ final class IpecacTests: XCTestCase {
             |{-1      }|{~2      }|{1       }|
             +----------+----------+----------+
             {{These are escaped braces}}
+            {These don't need to be escaped because they contain invalid characters}
             """, "This is an unbounded field", "Hello", "World", 27, 1, 2, 3, 1.0/3.0, 543.0/23.0, 99999.99999)
         print(value)
         
@@ -26,10 +27,32 @@ final class IpecacTests: XCTestCase {
         |Hello     |  World   |     Hello|
         +----------+----------+----------+
         {These are escaped braces}
+        {These don't need to be escaped because they contain invalid characters}
+        """)
+    }
+    
+    func testExample2() {
+        
+        let value = String(ipecac: """
+            function {?} {
+                if true {
+                    print("Hello World")
+                }
+            }
+            """, "printHelloWorld")
+        print(value)
+        
+        XCTAssert(value == """
+        function printHelloWorld {
+            if true {
+                print("Hello World")
+            }
+        }
         """)
     }
 
     static var allTests = [
         ("testExample", testExample),
+        ("testExample2", testExample2),
     ]
 }

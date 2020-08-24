@@ -15,6 +15,9 @@ public extension String {
         var scratch = ""
         scratch.reserveCapacity(format.count * 2)
         
+        var bracesScratch = ""
+        bracesScratch.reserveCapacity(format.count * 2)
+        
         var inFormatter = false
         var inEscaped = false
         var isClosingBrace = false
@@ -25,6 +28,7 @@ public extension String {
         var formatterPrecision: Int = 0
         var formatterIndex: Int = 0
         var formatterIsUnbounded = true
+        var formatterIsIllegal = false
         var formatterFieldWidth: Int = 0
         var formatterFieldAlignment: Alignment = .right
         
@@ -34,6 +38,8 @@ public extension String {
                 continue
             }
             if inFormatter {
+                bracesScratch.append(c)
+                
                 formatterFieldWidth += 1
                 if c == "{" && formatterFieldWidth == 2 {
                     scratch.append("{")
@@ -187,8 +193,14 @@ public extension String {
                     } else {
                         formatterPrecision = (formatterPrecision * 10) + 9
                     }
-                default:
+                case " ", "\n", "\r", "\t":
                     formatterIsUnbounded = false
+                default:
+                    formatterIsIllegal = true
+                    inFormatter = false
+                    scratch.append("{")
+                    scratch.append(contentsOf: bracesScratch)
+                    bracesScratch.removeAll(keepingCapacity: true)
                     break
                 }
                 
@@ -204,6 +216,8 @@ public extension String {
                     formatterFieldWidth = 1
                     formatterFieldAlignment = .right
                     formatterIsUnbounded = true
+                    formatterIsIllegal = false
+                    bracesScratch.removeAll(keepingCapacity: true)
                     beforePeriod = true
                     continue
                 }

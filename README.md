@@ -55,8 +55,8 @@ are allowed by using a ```?```.  This value starts at 0, and is incremented afte
 **Type safety**  
 is preserved because ```String(ipecac:)``` and ```print(ipecac:)``` only accept values which adhere to ```CustomStringConvertible```. 
 
-**Braces can still be used**  
-by escaping it with another brace; ```{{```. For consistency, ```}``` is also escaped by ```}```, so ```{{}}``` prints ```{}```
+**Braces can still be used normally;**  
+if illegale characters exist inside of a brace, or the braces fail to contain the required information for ipecac formatting, then they are interpretted as is.
 
 **Floating point precision**  
 is defined by placing ```.``` after the value index, followed by the number of precision digits. For example, ```{-?.4  }``` means "left aligned using the next value index with four points of decimal precision with a field width of 8"
