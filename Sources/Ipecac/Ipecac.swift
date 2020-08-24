@@ -28,7 +28,6 @@ public extension String {
         var formatterPrecision: Int = 0
         var formatterIndex: Int = 0
         var formatterIsUnbounded = true
-        var formatterIsIllegal = false
         var formatterFieldWidth: Int = 0
         var formatterFieldAlignment: Alignment = .right
         
@@ -196,7 +195,6 @@ public extension String {
                 case " ", "\n", "\r", "\t":
                     formatterIsUnbounded = false
                 default:
-                    formatterIsIllegal = true
                     inFormatter = false
                     scratch.append("{")
                     scratch.append(contentsOf: bracesScratch)
@@ -216,7 +214,6 @@ public extension String {
                     formatterFieldWidth = 1
                     formatterFieldAlignment = .right
                     formatterIsUnbounded = true
-                    formatterIsIllegal = false
                     bracesScratch.removeAll(keepingCapacity: true)
                     beforePeriod = true
                     continue
