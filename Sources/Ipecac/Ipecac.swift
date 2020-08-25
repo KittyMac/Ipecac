@@ -30,6 +30,17 @@ public extension String {
         var formatterFieldWidth: Int = 0
         var formatterFieldAlignment: Alignment = .right
         
+        let resetBraceStart = {
+            inFormatter = true
+            formatterIndex = 0
+            formatterPrecision = 0
+            formatterFieldWidth = 1
+            formatterFieldAlignment = .right
+            formatterIsUnbounded = true
+            bracesScratch.removeAll(keepingCapacity: true)
+            beforePeriod = true
+        }
+        
         for c in format {
             if inEscaped {
                 inEscaped = false
@@ -188,6 +199,17 @@ public extension String {
                     }
                 case " ", "\n", "\r", "\t":
                     formatterIsUnbounded = false
+                case "{":
+                    // we encountered a "{   {" type deal. This could be a valid brace inside
+                    // a brace to be ignored.  So we invalidate the outer brace, and start
+                    // tracking the inner one as if it were real
+                    bracesScratch.removeLast()
+                    scratch.append("{")
+                    scratch.append(contentsOf: bracesScratch)
+                    bracesScratch.removeAll(keepingCapacity: true)
+                    
+                    resetBraceStart()
+                    break
                 default:
                     inFormatter = false
                     scratch.append("{")
@@ -202,14 +224,7 @@ public extension String {
                     continue
                 }
                 if c == "{" {
-                    inFormatter = true
-                    formatterIndex = 0
-                    formatterPrecision = 0
-                    formatterFieldWidth = 1
-                    formatterFieldAlignment = .right
-                    formatterIsUnbounded = true
-                    bracesScratch.removeAll(keepingCapacity: true)
-                    beforePeriod = true
+                    resetBraceStart()
                     continue
                 }
                 

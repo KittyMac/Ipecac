@@ -50,6 +50,32 @@ final class IpecacTests: XCTestCase {
         }
         """)
     }
+    
+    func testExample3() {
+        
+        let value = String(ipecac: """
+            @dynamicMemberLookup
+            public enum Pamphlet {
+                subscript(dynamicMember member: String) -> (_ input: String) -> Void {
+                    switch input {
+                        {0}
+                    }
+                }
+            }
+            """, "printHelloWorld")
+        print(value)
+        
+        XCTAssert(value == """
+            @dynamicMemberLookup
+            public enum Pamphlet {
+                subscript(dynamicMember member: String) -> (_ input: String) -> Void {
+                    switch input {
+                        printHelloWorld
+                    }
+                }
+            }
+            """)
+    }
 
     static var allTests = [
         ("testExample", testExample),
