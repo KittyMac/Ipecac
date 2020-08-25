@@ -20,7 +20,6 @@ public extension String {
         
         var inFormatter = false
         var inEscaped = false
-        var isClosingBrace = false
         
         var variableIndex: Int = 0
         
@@ -40,11 +39,6 @@ public extension String {
                 bracesScratch.append(c)
                 
                 formatterFieldWidth += 1
-                if c == "{" && formatterFieldWidth == 2 {
-                    scratch.append("{")
-                    inFormatter = false
-                    continue
-                }
                 if c == "}" {
                     inFormatter = false
                     if formatterIndex >= 0 && formatterIndex < values.count {
@@ -217,15 +211,6 @@ public extension String {
                     bracesScratch.removeAll(keepingCapacity: true)
                     beforePeriod = true
                     continue
-                }
-                if c == "}" {
-                    if isClosingBrace == true {
-                        isClosingBrace = false
-                        continue
-                    }
-                    isClosingBrace = true
-                } else {
-                    isClosingBrace = false
                 }
                 
                 scratch.append(c)
