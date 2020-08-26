@@ -76,6 +76,19 @@ final class IpecacTests: XCTestCase {
             }
             """)
     }
+    
+    func testExample4() {
+        
+        let value = String(ipecac: """
+            extension {?} { public struct {?} { } }
+            """, "Hello", "World")
+        print(value)
+        
+        XCTAssert(value == """
+            extension Hello { public struct World { } }
+            """)
+    }
+
 
     static var allTests = [
         ("testExample", testExample),

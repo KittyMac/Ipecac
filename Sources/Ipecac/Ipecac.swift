@@ -25,6 +25,7 @@ public extension String {
         
         var beforePeriod = true
         var formatterPrecision: Int = 0
+        var formatterHasIndex = false
         var formatterIndex: Int = 0
         var formatterIsUnbounded = true
         var formatterFieldWidth: Int = 0
@@ -32,6 +33,7 @@ public extension String {
         
         let resetBraceStart = {
             inFormatter = true
+            formatterHasIndex = false
             formatterIndex = 0
             formatterPrecision = 0
             formatterFieldWidth = 1
@@ -52,7 +54,13 @@ public extension String {
                 formatterFieldWidth += 1
                 if c == "}" {
                     inFormatter = false
-                    if formatterIndex >= 0 && formatterIndex < values.count {
+                    if formatterHasIndex == false {
+                        // We hit something like {  }, not a real formatter
+                        inFormatter = false
+                        scratch.append("{")
+                        scratch.append(contentsOf: bracesScratch)
+                        bracesScratch.removeAll(keepingCapacity: true)
+                    } else if formatterIndex >= 0 && formatterIndex < values.count {
                         
                         let value = values[formatterIndex]
                         var valueString = value.description
@@ -126,6 +134,7 @@ public extension String {
                 case ".":
                     beforePeriod = false
                 case "?":
+                    formatterHasIndex = true
                     formatterIndex = variableIndex
                     variableIndex += 1
                 case "-":
@@ -138,60 +147,70 @@ public extension String {
                     formatterFieldAlignment = .right
                     formatterIsUnbounded = false
                 case "0":
+                    formatterHasIndex = true
                     if beforePeriod {
                         formatterIndex = (formatterIndex * 10) + 0
                     } else {
                         formatterPrecision = (formatterPrecision * 10) + 0
                     }
                 case "1":
+                    formatterHasIndex = true
                     if beforePeriod {
                         formatterIndex = (formatterIndex * 10) + 1
                     } else {
                         formatterPrecision = (formatterPrecision * 10) + 1
                     }
                 case "2":
+                    formatterHasIndex = true
                     if beforePeriod {
                         formatterIndex = (formatterIndex * 10) + 2
                     } else {
                         formatterPrecision = (formatterPrecision * 10) + 2
                     }
                 case "3":
+                    formatterHasIndex = true
                     if beforePeriod {
                         formatterIndex = (formatterIndex * 10) + 3
                     } else {
                         formatterPrecision = (formatterPrecision * 10) + 3
                     }
                 case "4":
+                    formatterHasIndex = true
                     if beforePeriod {
                         formatterIndex = (formatterIndex * 10) + 4
                     } else {
                         formatterPrecision = (formatterPrecision * 10) + 4
                     }
                 case "5":
+                    formatterHasIndex = true
                     if beforePeriod {
                         formatterIndex = (formatterIndex * 10) + 5
                     } else {
                         formatterPrecision = (formatterPrecision * 10) + 5
                     }
                 case "6":
+                    formatterHasIndex = true
                     if beforePeriod {
                         formatterIndex = (formatterIndex * 10) + 6
                     } else {
                         formatterPrecision = (formatterPrecision * 10) + 6
                     }
                 case "7":
+                    formatterHasIndex = true
                     if beforePeriod {
                         formatterIndex = (formatterIndex * 10) + 7
                     } else {
                         formatterPrecision = (formatterPrecision * 10) + 7
                     }
                 case "8":
+                    formatterHasIndex = true
                     if beforePeriod {
                         formatterIndex = (formatterIndex * 10) + 8
                     } else {
                         formatterPrecision = (formatterPrecision * 10) + 8
                     }
                 case "9":
+                    formatterHasIndex = true
                     if beforePeriod {
                         formatterIndex = (formatterIndex * 10) + 9
                     } else {
