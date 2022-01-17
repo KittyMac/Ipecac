@@ -8,6 +8,7 @@ final class IpecacTests: XCTestCase {
         let value = String(ipecac: """
             {0}
             +----------+----------+----------+
+            |{-0      }|{~0      }|{0       }|
             |{-??     }|{~?      }|{?       }|
             |{-?      }|{~?      }|{+?      }|
             |{-?.2    }|{~8.3    }|{+?.1    }|
@@ -21,6 +22,7 @@ final class IpecacTests: XCTestCase {
         XCTAssert(value == """
         This is an unbounded field
         +----------+----------+----------+
+        |This is an|This is an|This is an|
         |Hello     |  World   |        27|
         |1         |    2     |         3|
         |0.33      |  23.608  |      23.6|

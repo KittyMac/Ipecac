@@ -1,4 +1,6 @@
-## "Better than nothing" formatted strings for Swift
+# DEPRECATED: all Ipecac functionality has been incorporated into [Hitch: High performance utf8 strings for Swift](https://github.com/KittyMac/Hitch)
+
+
 
 Think of Ipecac as an alternative for ```String(format:)```
 
@@ -56,7 +58,7 @@ are allowed by using a ```?```.  This value starts at 0, and is incremented afte
 is preserved because ```String(ipecac:)``` and ```print(ipecac:)``` only accept values which adhere to ```CustomStringConvertible```. 
 
 **Braces can still be used normally;**  
-if illegale characters exist inside of a brace, or the braces fail to contain the required information for ipecac formatting, then they are interpretted as is.
+if illegal characters exist inside of a brace, or the braces fail to contain the required information for ipecac formatting, then they are interpretted as is.
 
 **Floating point precision**  
 is defined by placing ```.``` after the value index, followed by the number of precision digits. For example, ```{-?.4  }``` means "left aligned using the next value index with four points of decimal precision with a field width of 8"
